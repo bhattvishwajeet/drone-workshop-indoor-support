@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drone Workshop Support</title>
+<meta name="description" content="Help and privacy policy for Drone Workshop, an offline drone engineering game for kids: build a drone, test it, fly it indoors, and design a real one.">
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --text: #1d232b;
+    --muted: #5a6573;
+    --border: #dfe3e8;
+    --accent: #1f8a4c;
+    --accent-soft: #e5f4ea;
+    --orange: #d9730d;
+    --blue: #1f6fd1;
+    --shadow: 0 1px 2px rgba(16, 24, 40, .06), 0 4px 16px rgba(16, 24, 40, .06);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12161b;
+      --surface: #1b2128;
+      --text: #e8ecf0;
+      --muted: #9aa5b1;
+      --border: #2c343d;
+      --accent: #4cc27a;
+      --accent-soft: #1d3326;
+      --orange: #f0a04b;
+      --blue: #6aa8f5;
+      --shadow: none;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #12161b; --surface: #1b2128; --text: #e8ecf0; --muted: #9aa5b1; --border: #2c343d;
+    --accent: #4cc27a; --accent-soft: #1d3326; --orange: #f0a04b; --blue: #6aa8f5; --shadow: none;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 56px 0 32px; }
+  .eyebrow { color: var(--accent); font-weight: 600; letter-spacing: .02em; margin: 0 0 8px; }
+  h1 { font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.15; margin: 0 0 12px; }
+  .lede { font-size: 1.15rem; color: var(--muted); max-width: 680px; margin: 0; }
+  .loop {
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 0; padding: 0; list-style: none;
+  }
+  .loop li {
+    background: var(--accent-soft); color: var(--text); border-radius: 999px;
+    padding: 6px 14px; font-weight: 600; font-size: .95rem;
+  }
+
+  nav.toc {
+    position: sticky; top: 0; z-index: 2; background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  nav.toc ul {
+    display: flex; gap: 4px; overflow-x: auto; margin: 0; padding: 10px 0; list-style: none;
+    scrollbar-width: none;
+  }
+  nav.toc a {
+    display: block; white-space: nowrap; padding: 6px 12px; border-radius: 8px;
+    color: var(--muted); text-decoration: none; font-weight: 500; font-size: .95rem;
+  }
+  nav.toc a:hover { background: var(--surface); color: var(--text); }
+
+  section { padding: 40px 0 8px; scroll-margin-top: 56px; }
+  h2 { font-size: 1.6rem; margin: 0 0 8px; }
+  h3 { font-size: 1.15rem; margin: 28px 0 6px; }
+  p { margin: 0 0 14px; }
+
+  figure {
+    margin: 20px 0 28px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden; box-shadow: var(--shadow);
+  }
+  figure a { display: block; }
+  figure img { display: block; width: 100%; height: auto; }
+  figcaption { padding: 12px 16px 14px; color: var(--muted); font-size: .95rem; }
+  figcaption strong { color: var(--text); }
+  .pair { display: grid; grid-template-columns: 1fr; gap: 0 20px; }
+  @media (min-width: 820px) { .pair { grid-template-columns: 1fr 1fr; } .pair figure { margin-top: 8px; } }
+
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 16px 0; }
+  .steps li { counter-increment: step; position: relative; padding: 0 0 14px 44px; }
+  .steps li::before {
+    content: counter(step); position: absolute; left: 0; top: 0;
+    width: 30px; height: 30px; border-radius: 50%; background: var(--accent); color: #fff;
+    display: grid; place-items: center; font-weight: 700; font-size: .9rem;
+  }
+
+  .table-wrap { overflow-x: auto; margin: 16px 0 24px; }
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 12px; overflow: hidden; min-width: 520px; }
+  th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  tr:last-child td { border-bottom: 0; }
+
+  .orange { color: var(--orange); font-weight: 600; }
+  .blue { color: var(--blue); font-weight: 600; }
+
+  details {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 16px; margin: 10px 0;
+  }
+  summary { cursor: pointer; font-weight: 600; }
+  details[open] summary { margin-bottom: 8px; }
+  details p:last-child { margin-bottom: 0; }
+
+  .callout { background: var(--accent-soft); border-radius: 12px; padding: 14px 16px; margin: 16px 0; }
+  a { color: var(--accent); }
+  .small { font-size: .92rem; color: var(--muted); }
+  footer { padding: 48px 0 64px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--border); margin-top: 48px; }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <p class="eyebrow">Drone Workshop · Support</p>
+  <h1>Build it. Test it. Fly it. Find out why.</h1>
+  <p class="lede">Drone Workshop is a drone engineering game for kids aged 8–12 on iPhone and iPad. Players build a quadcopter from parts, test it on the workbench, fly it in a big indoor test hall, work through engineering missions, and finally design a real drone from real, buyable components.</p>
+  <ul class="loop" aria-label="Game loop">
+    <li>1 · Build</li><li>2 · Hover Test</li><li>3 · Fly</li><li>4 · Improve</li><li>5 · Design a real drone</li>
+  </ul>
+</header>
+
+<nav class="toc" aria-label="On this page">
+  <div class="wrap">
+    <ul>
+      <li><a href="#start">Getting started</a></li>
+      <li><a href="#build">Workshop</a></li>
+      <li><a href="#lab">Engineering Lab</a></li>
+      <li><a href="#fly">Flight Zone</a></li>
+      <li><a href="#controls">Controls</a></li>
+      <li><a href="#projects">Real Drone Projects</a></li>
+      <li><a href="#parents">For parents</a></li>
+      <li><a href="#faq">Questions</a></li>
+      <li><a href="#privacy">Privacy policy</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section id="start">
+    <h2>Getting started</h2>
+    <p>The home screen has three big cards. <strong>Engineering Lab</strong> is where you learn and build through missions. <strong>Flight Zone</strong> is for flying for fun. <strong>Real Drone Projects</strong> is where you design a drone you could really build. The small buttons at the top open the <strong>Workshop</strong>, <strong>My Hangar</strong> (your saved drones), <strong>Photos</strong>, <strong>Sound</strong> and <strong>Credits</strong>.</p>
+    <figure>
+      <a href="phone-home.jpg"><img src="phone-home.jpg" width="1400" height="644" loading="lazy"
+        alt="The home screen on iPhone with three cards: Engineering Lab, Flight Zone and Real Drone Projects, and small buttons for Workshop, My Hangar, Photos, Sound and Credits."></a>
+      <figcaption><strong>Home screen.</strong> Each card shows where you are: missions completed, the drone that's ready to fly, and your current project.</figcaption>
+    </figure>
+    <p>The game works the same on iPhone and iPad and is played with the device turned sideways.</p>
+  </section>
+
+  <section id="build">
+    <h2>Building in the Workshop</h2>
+    <p>Your drone sits on a workbench. Every part is a 3D object with its own weight and job: frames, motors, propellers, batteries, the flight controller ("brain"), cameras, landing legs, cargo trays and more.</p>
+    <figure>
+      <a href="phone-workshop.jpg"><img src="phone-workshop.jpg" width="1400" height="644" loading="lazy"
+        alt="The Workshop on iPhone: a finished quadcopter with orange and blue propellers on a workbench, the parts box along the bottom, and Hover and Test Flight buttons."></a>
+      <figcaption><strong>The Workshop.</strong> The line at the bottom left sums up the build: ready to fly, how much more it can lift than it weighs, and its estimated flight time.</figcaption>
+    </figure>
+    <ol class="steps">
+      <li><strong>Open the parts box</strong> and pick a group (Frames, Motors, Props, Power, Camera, Extras, Remote).</li>
+      <li><strong>Drag a part onto a glowing spot</strong> on the drone. It snaps into place. You can also tap a part, then tap a spot.</li>
+      <li><strong>Match the propellers:</strong> an orange propeller goes where the ring glows orange, a blue one where it glows blue. Neighbouring propellers spin opposite ways so the drone doesn't twist.</li>
+      <li><strong>Run a Hover Test</strong> to check it on the bench, then tap <strong>Test Flight</strong>.</li>
+    </ol>
+    <h3>Changing and removing parts</h3>
+    <p>Tap a part on the drone to see it, swap it or <strong>Remove</strong> it. You can also drag a part off the drone, or swipe it outward. <strong>Undo</strong> puts it back. A motor takes its propeller with it.</p>
+    <h3>Hover Test: find out why</h3>
+    <p>The Hover Test runs the real flight physics on the bench, held by a safety line. If the drone can't lift off, tips or drains the battery too fast, it says why, and <strong>Show the engineering</strong> explains the numbers and suggests parts that would really help.</p>
+    <figure>
+      <a href="phone-hover-test.jpg"><img src="phone-hover-test.jpg" width="1400" height="644" loading="lazy"
+        alt="A Hover Test result card saying Unstable: the drone tipped 29 degrees because it is front-heavy, with Keep building and Try again buttons."></a>
+      <figcaption><strong>Hover Test.</strong> This drone is front-heavy, so it tipped and the safety line stopped it.</figcaption>
+    </figure>
+    <h3>Build Impact</h3>
+    <p>When you pick a part in the parts box, <strong>Build Impact</strong> shows what it would change before you fit it: weight, battery energy, lift compared with weight, and hover time.</p>
+    <figure>
+      <a href="ipad-build-impact.jpg"><img src="ipad-build-impact.jpg" width="1400" height="1050" loading="lazy"
+        alt="The Workshop on iPad with the Big battery selected in the parts box and a Build Impact panel comparing weight, battery energy, lift to weight and hover time now and with the new battery."></a>
+      <figcaption><strong>Build Impact on iPad.</strong> A bigger battery stores more energy but adds weight, so the drone has less spare lift.</figcaption>
+    </figure>
+    <h3>My Hangar</h3>
+    <p>Save drones in <strong>My Hangar</strong>, load them back onto the bench, rename, duplicate or delete them. Five ready-made designs (Speedster, Titan, Cinemaster, Target Pro and Pathfinder) are always there to try.</p>
+    <h3>Moving around</h3>
+    <ul>
+      <li><strong>Turn the drone:</strong> drag one finger on empty space.</li>
+      <li><strong>Zoom:</strong> pinch with two fingers.</li>
+      <li><strong>Back to the normal view:</strong> tap <strong>View</strong>.</li>
+      <li><strong>Hints on or off:</strong> tap <strong>Hints</strong>.</li>
+    </ul>
+  </section>
+
+  <section id="lab">
+    <h2>Engineering Lab</h2>
+    <p>Sixteen missions in six chapters, opened one after the other: from building your first drone and making it hover, through heavy lifting, battery endurance, cargo delivery, precision flying and landing, camera inspection, fault diagnosis, wind and emergency landings, to warehouse inspection and a Final Prototype. Finishing all sixteen earns the <strong>Certified Drone Engineer</strong> badge. Mission 17, <strong>Your First Real Drone</strong>, is the graduation project (see <a href="#projects">Real Drone Projects</a>).</p>
+    <figure>
+      <a href="phone-missions.jpg"><img src="phone-missions.jpg" width="1400" height="644" loading="lazy"
+        alt="Mission Control showing chapter 4, Vision and Inspection, with mission 8 FPV Explorer marked Next and missions 9 and 10 locked."></a>
+      <figcaption><strong>Mission Control.</strong> Swipe between chapters. The next mission is highlighted.</figcaption>
+    </figure>
+    <p>Each briefing lists the objectives. Tap <strong>Prepare Drone</strong> to go to the Workshop with the mission set up, then take the test. Results are measured from the real flight: nothing is faked, and the game never changes your drone for you. Missions give XP, up to three stars, and new parts as rewards.</p>
+    <figure>
+      <a href="phone-briefing.jpg"><img src="phone-briefing.jpg" width="1400" height="644" loading="lazy"
+        alt="The Heavy Lift mission briefing: lift a 600 g parcel, with four objectives, the reward earned, and a Prepare Drone button."></a>
+      <figcaption><strong>A mission briefing.</strong> Stuck? In the Workshop, <strong>Talk to Expert</strong> compares your drone with builds that are known to pass.</figcaption>
+    </figure>
+  </section>
+
+  <section id="fly">
+    <h2>Flight Zone</h2>
+    <p>Pick a drone (your workbench drone, a saved one or a ready-made design) and how to fly. Every flight happens in the indoor test hall and uses exactly the drone you chose.</p>
+    <h3>Open Workshop</h3>
+    <p>Free flying in the furnished test hall. Fly into one of the staged areas and an activity starts by itself: <strong>Hoop Run</strong>, <strong>Inspection Round</strong> (hold steady in each checkpoint), <strong>Landing Practice</strong>, <strong>Wind Hold</strong> in front of the big fan, or <strong>Plaque Photos</strong> with the drone camera. Wall hoops and shelves chime when you fly through or land on them. Nothing is scored, so it's a good place to practise.</p>
+    <div class="pair">
+      <figure>
+        <a href="ipad-open-workshop.jpg"><img src="ipad-open-workshop.jpg" width="1400" height="1050" loading="lazy"
+          alt="The drone flying towards an orange wall hoop next to a 5 m height sign in the indoor test hall, with joysticks and flight buttons."></a>
+        <figcaption><strong>A wall hoop</strong> 5 m up.</figcaption>
+      </figure>
+      <figure>
+        <a href="ipad-racks.jpg"><img src="ipad-racks.jpg" width="1400" height="1050" loading="lazy"
+          alt="The drone between warehouse racks with cyan checkpoint markers and green wind-zone circles on the floor."></a>
+        <figcaption><strong>Racks and checkpoints</strong> for the Inspection Round.</figcaption>
+      </figure>
+    </div>
+    <h3>Pursuit Challenge</h3>
+    <p>Follow a target drone around the hall and keep it within range for 60 seconds out of two minutes.</p>
+    <figure>
+      <a href="phone-pursuit.jpg"><img src="phone-pursuit.jpg" width="1400" height="644" loading="lazy"
+        alt="Pursuit Challenge through the drone camera: the target drone ahead with a green ring, and a Tracking 7.1 m badge."></a>
+      <figcaption><strong>Pursuit Challenge</strong> through the drone camera.</figcaption>
+    </figure>
+    <h3>Drone Rush</h3>
+    <p>Targets light up one at a time anywhere in the hall. Fly into each one and hold steady for a second before its time runs out. Streaks score more.</p>
+    <figure>
+      <a href="phone-rush.jpg"><img src="phone-rush.jpg" width="1400" height="644" loading="lazy"
+        alt="Drone Rush: the drone just after take-off from the landing pad, with an amber target marker in the distance and a Target 5.6 s countdown."></a>
+      <figcaption><strong>Drone Rush.</strong> The arrow and distance point to the current target.</figcaption>
+    </figure>
+    <p>Pursuit Challenge and Drone Rush get a little harder after every two successes. You can turn that off or reset it in <strong>My Hangar → Flight Challenge Difficulty</strong>.</p>
+  </section>
+
+  <section id="controls">
+    <h2>Flight controls</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Control</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Start / Stop</strong></td><td>Turns the motors on or off.</td></tr>
+          <tr><td><strong>Take off / Land</strong></td><td>Climbs to a safe height and hovers, or comes down gently.</td></tr>
+          <tr><td><strong>Left stick</strong></td><td>Up and down: climb or descend. Left and right: turn.</td></tr>
+          <tr><td><strong>Right stick</strong></td><td>Fly forward, backward and sideways.</td></tr>
+          <tr><td><strong>A and B buttons</strong></td><td>Remote buttons you choose in the Workshop (Remote group), such as Hover, Turn around, Fly home or a flip.</td></tr>
+          <tr><td><strong>Camera</strong></td><td>Look through the drone's camera (if it has one). The round shutter button takes a photo.</td></tr>
+          <tr><td><strong>Wide</strong></td><td>Switches between the close and the wide follow view.</td></tr>
+          <tr><td><strong>Guide</strong></td><td>Shows an arrow pointing to where you need to go.</td></tr>
+          <tr><td><strong>Pause</strong></td><td>Resume, start again, switch Assisted/Manual, change drone, or leave.</td></tr>
+          <tr><td><strong>Home</strong></td><td>Leaves the flight (in the air it asks first).</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>Assisted</strong> mode is best for beginners: the drone holds its height and stops when you let go. In <strong>Manual</strong> mode the left stick sets the motor power directly. It's harder and closer to a real pilot's job. The gauge button on the status card opens <strong>Engineering Details</strong>: speed, tilt, battery voltage and current, weight, thrust and how hard each motor is working.</p>
+  </section>
+
+  <section id="projects">
+    <h2>Real Drone Projects</h2>
+    <p>Here players design drones from <strong>real, commercially available components</strong>. Specifications come from manufacturers' published data, and every part shows its source. Anything that couldn't be confirmed is marked <strong>Not yet verified</strong> rather than guessed.</p>
+    <figure>
+      <a href="ipad-projects.jpg"><img src="ipad-projects.jpg" width="1400" height="1050" loading="lazy"
+        alt="The Real Drone Projects screen with Project 01, Build Your First $100 Drone, and Project 02, Your First Real Drone, each with status, component counts and buttons for Continue Project, Export Design and Prompt Generator."></a>
+      <figcaption><strong>Two projects</strong>, beginner first.</figcaption>
+    </figure>
+    <h3>Project 01: Build Your First $100 Drone</h3>
+    <p>A small indoor drone with a $100 target for everything needed to fly it. Choose a kit or individual parts, see the running total, check thrust and safety, read the assembly steps, and plan upgrades: a camera, then a Raspberry Pi as a companion computer.</p>
+    <figure>
+      <a href="ipad-starter-100.jpg"><img src="ipad-starter-100.jpg" width="1400" height="1050" loading="lazy"
+        alt="Project 01 on iPad: the ESP-FLY DIY kit chosen as a kit, with its price of $59.99, weight, motors, propellers, battery and flight time, and the budget chip showing $59.99 of $100."></a>
+      <figcaption><strong>Choosing a kit.</strong> The chip at the top right keeps the base cost against the $100 target.</figcaption>
+    </figure>
+    <h3>Project 02: Your First Real Drone</h3>
+    <p>A bigger quadcopter that must carry 500 g for at least 10 minutes with twice as much thrust as weight. It's the same design as Mission 17 in the Engineering Lab.</p>
+    <h3>Export and Prompt Generator</h3>
+    <p><strong>Export Design</strong> creates a PDF and a JSON file of the design. The <strong>Prompt Generator</strong> writes a ready-made text (design help, design review or build research) that can be copied or shared with a grown-up's help. The app doesn't contain or connect to any AI service itself.</p>
+    <div class="callout">
+      <p><strong>Safety.</strong> A design that passes these checks is a preliminary design. It isn't a certified or safe-to-fly aircraft. Prices are indicative (shipping and taxes not included) and can change. Building, charging batteries and flying a real drone need the real parts, the manufacturers' instructions and adult supervision, and local drone rules apply.</p>
+    </div>
+  </section>
+
+  <section id="parents">
+    <h2>For parents and teachers</h2>
+    <ul>
+      <li><strong>No accounts, no ads, no in-app purchases, no internet needed.</strong> Everything runs on the device.</li>
+      <li><strong>Grown-up check.</strong> Anything that leaves the app (a manufacturer's documentation page, a credits link, or the share sheet for exports and prompts) first asks a grown-up to solve a multiplication question.</li>
+      <li><strong>Learning goals:</strong> weight and thrust, balance and centre of mass, battery energy and flight time, trade-offs between parts, testing and diagnosing faults, and reading real component specifications.</li>
+      <li><strong>Physics, not scripts:</strong> the drone flies according to the parts fitted. A missing motor, a reversed propeller or a heavy camera really change how it flies.</li>
+    </ul>
+  </section>
+
+  <section id="faq">
+    <h2>Questions</h2>
+    <details>
+      <summary>My drone won't take off.</summary>
+      <p>Run a <strong>Hover Test</strong> in the Workshop: it says what's wrong. Common causes are a missing motor, propeller or battery, a propeller on the wrong colour, or motors that are too weak for the drone's weight.</p>
+    </details>
+    <details>
+      <summary>The drone keeps drifting or tipping.</summary>
+      <p>Check that the weight is balanced (a heavy camera or battery on one side makes that side's motors work harder), and use <strong>Assisted</strong> mode from the Pause menu.</p>
+    </details>
+    <details>
+      <summary>A mission is locked.</summary>
+      <p>Missions open in order. Finish the one before it in Mission Control.</p>
+    </details>
+    <details>
+      <summary>Some parts are locked in a mission.</summary>
+      <p>Some parts are mission rewards. They're available in missions once earned. In the Workshop on its own and in Flight Zone nothing is ever locked.</p>
+    </details>
+    <details>
+      <summary>Can I really build the drone from Real Drone Projects?</summary>
+      <p>The parts are real products, but the app only checks the design on paper. Treat the result as a starting point for research with an adult, check every part's documentation, and follow the manufacturers' instructions and local rules.</p>
+    </details>
+    <details>
+      <summary>Why did a web page ask a maths question?</summary>
+      <p>That's the grown-up check. It keeps young players from leaving the app by accident.</p>
+    </details>
+    <details>
+      <summary>How do I start over?</summary>
+      <p>Deleting the app removes all its saved data from the device. Reinstalling starts fresh.</p>
+    </details>
+  </section>
+
+  <section id="privacy">
+    <h2>Privacy policy</h2>
+    <p class="small">Last updated: 18 November 2026</p>
+    <div class="callout">
+      <p><strong>Drone Workshop does not collect, store on a server, share or sell any personal information.</strong> It works completely offline: no accounts, no ads, no analytics, no tracking and no in-app purchases.</p>
+    </div>
+    <h3>What stays on the device</h3>
+    <p>The game saves your drone designs, My Hangar, mission progress, photos taken in the game, project designs and settings (such as sound and hints) in the app's own storage on your iPhone or iPad. This data never leaves the device through the app and is deleted when you delete the app. It may be included in your own iCloud or computer backup of the device, as for any app.</p>
+    <h3>What the app doesn't use</h3>
+    <p>The app doesn't use the device's camera, microphone, location, contacts or photo library, and it doesn't make any network connections.</p>
+    <h3>Sharing and links</h3>
+    <p>Files and text are only shared when a user chooses <strong>Export Design</strong> or <strong>Share Prompt</strong> and passes the grown-up check; they then go wherever the user sends them with the system share sheet. Links to manufacturers' documentation and to the credits open in Safari, also only after the grown-up check. Those websites have their own privacy policies.</p>
+    <h3>Children</h3>
+    <p>The app is made for children and collects no information from them, so there's nothing to review or delete beyond the on-device data described above.</p>
+    <h3>Changes</h3>
+    <p>If this policy changes, the new version will be posted on this page with a new date.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Found a problem or have an idea? Please <a href="https://github.com/bhattvishwajeet/drone-workshop/issues">open an issue on GitHub</a>. Say which device you're using and what happened; a screenshot helps a lot.</p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">Drone Workshop · An engineering game for curious kids</div>
+</footer>
+
+</body>
+</html>
